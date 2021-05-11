@@ -17,8 +17,8 @@ ENV PATH="$PATH:$POETRY_HOME/bin"
 RUN apt-get update && apt-get install --no-install-recommends -y apt-utils ca-certificates curl build-essential git default-libmysqlclient-dev gcc bash sqlite3 libcurl4-gnutls-dev libsqlite3-dev libtiff-dev pkg-config -y
 RUN apt-get -qy autoremove
 RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
-RUN mkdir /proj && cd /proj && curl -sSL https://download.osgeo.org/proj/${PROJ_VERSION}.tar.gz --output proj.tar.gz && tar xvzf proj.tar.gz && cd ${PROJ_VERSION} && ./configure && make && make install
+RUN mkdir /proj && cd /proj && curl -sSL https://download.osgeo.org/proj/${PROJ_VERSION}.tar.gz --output proj.tar.gz && tar xvzf proj.tar.gz && cd ${PROJ_VERSION} && ./configure && make && make install && rm -fR *.gz ${PROJ_VERSION}/src
 WORKDIR $PYSETUP_PATH
 ENV LD_LIBRARY_PATH="/lib:/usr/lib:/usr/local/lib"
-RUN curl -sSL https://sdk.cloud.google.com | bash
+#RUN curl -sSL https://sdk.cloud.google.com | bash > /dev/null
 ENV PATH $PATH:/root/google-cloud-sdk/bin/
